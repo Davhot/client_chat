@@ -1,0 +1,69 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  CacheRootDirectory: tmp/cache
+  TargetRubyVersion: 2.6
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+
+Style/AsciiComments:
+  Enabled: False
+
+Naming/AsciiIdentifiers:
+  Enabled: False
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - 'db/migrate/*'
+
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/*'
+
+Style/GuardClause:
+  MinBodyLength: 5
+
+Style/Lambda:
+  Enabled: false
+
+Metrics/AbcSize:
+    Exclude:
+      - 'app/services/history_contract_search/xlsx_generator/*'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'db/migrate/*'
+    - 'app/controllers/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'lib/tasks/templates_migration.rake'
+    - 'spec/**/*'
+
+Metrics/LineLength:
+  IgnoreCopDirectives: true
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/tasks/templates_migration.rake'
+
+Style/PerlBackrefs:
+  Enabled: False
+
+Style/FormatStringToken:
+  Enabled: False
+
+Style/DoubleNegation:
+  Enabled: False
+
+Style/RescueModifier:
+  Exclude:
+    - 'spec/support/shared_examples/raw_transactions_shared.rb'
+    - 'spec/services/raw_transaction_persist_service_spec.rb'
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/**/**/*'
