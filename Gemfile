@@ -7,6 +7,7 @@ ruby '2.6.1'
 
 gem 'devise', '~> 4.7.1'
 gem 'devise-jwt'
+gem 'http'
 gem 'jbuilder', github: 'rails/jbuilder'
 gem 'pg', '~> 1.1.4'
 gem 'puma', '~> 3.11'
