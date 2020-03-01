@@ -10,6 +10,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   end
 
   def create
+    BeaverClient::Channel.create(channel_params[:name])
     channel = Channel.create(channel_params)
     render json: channel, status: :created
   end
@@ -25,6 +26,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   end
 
   def destroy
+    BeaverClient::Channel.delete(@channel.name)
     @channel.destroy
 
     head 204

@@ -23,6 +23,8 @@ Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 require 'devise'
 require 'database_cleaner/active_record'
 
+require 'webmock/rspec'
+
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.extend ControllerMacros, type: :controller

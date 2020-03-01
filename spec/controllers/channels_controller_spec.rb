@@ -9,6 +9,11 @@ RSpec.describe Api::V1::ChannelsController, type: :controller do
 
   let(:channel) { create(:channel) }
 
+  before(:each) do
+    stub_request(:any, "#{ENV['BEAVER_URL']}/channel")
+      .to_return(status: 201, body: '', headers: {})
+  end
+
   describe 'POST create' do
     it 'render status 200' do
       post :create, params: { channel: { name: 'room_1' } }
@@ -69,13 +74,18 @@ RSpec.describe Api::V1::ChannelsController, type: :controller do
 
   describe 'Delete #destroy' do
     it 'render status 200' do
+      stub_request(:delete, "#{ENV['BEAVER_URL']}/channel/#{channel.name}")
+        .to_return(status: 204, body: '', headers: {})
+
       delete :destroy, params: { id: channel.id }
       expect(response).to have_http_status(:success)
     end
 
     it 'check destroy channel' do
-      delete :destroy, params: { id: channel.id }
+      stub_request(:delete, "#{ENV['BEAVER_URL']}/channel/#{channel.name}")
+        .to_return(status: 204, body: '', headers: {})
 
+      delete :destroy, params: { id: channel.id }
       expect(Channel.count).to eq(0)
     end
   end

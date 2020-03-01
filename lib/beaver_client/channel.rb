@@ -13,7 +13,7 @@ module BeaverClient::Channel
         body: body,
         method: 'post'
       )
-      response[:valid] && response[:status] == 201
+      raise response.inspect unless response[:valid] && response[:status] == 201
     end
 
     def get(channel_name)
@@ -29,7 +29,7 @@ module BeaverClient::Channel
         url: ENV['BEAVER_URL'] + "/channel/#{channel_name}",
         method: 'delete'
       )
-      response[:valid] && response[:status] == 204
+      raise response.inspect unless response[:valid] && response[:status] == 204
     end
 
     private
@@ -50,8 +50,12 @@ module BeaverClient::Channel
           when 'delete'
             response.delete(url, body: JSON.dump(body))
           end
-        body = response.body.readpartial
-        body = JSON.parse(body).to_h if body.present?
+        if response.try(:body).present?
+          body = response.body.readpartial
+          body = JSON.parse(body).to_h if body.present?
+        else
+          body = nil
+        end
         { body: body, status: response.status, valid: true }
       rescue StandardError => e
         Rails.logger.error "[#{self}]: #{e.message} | #{e.backtrace[0]}"
