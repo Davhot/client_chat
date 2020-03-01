@@ -3,5 +3,6 @@
 FactoryBot.define do
   factory :client do
     token { 'MyString' }
+    name { 'MyString' }
   end
 end
