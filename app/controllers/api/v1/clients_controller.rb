@@ -2,8 +2,8 @@
 
 # Контроллер категорий
 class Api::V1::ClientsController < Api::V1::BaseController
-  before_action :find_client, only: %i[show destroy subscribe unsubscribe]
-  before_action :find_channel, only: %i[subscribe unsubscribe]
+  before_action :find_client, only: %i[show destroy subscribe unsubscribe send_message]
+  before_action :find_channel, only: %i[subscribe unsubscribe send_message]
 
   def index
     @clients = Client.all.order(created_at: :desc)
@@ -41,6 +41,13 @@ class Api::V1::ClientsController < Api::V1::BaseController
     head 200
   end
 
+  def send_message
+    BeaverClient::Client.send_message(message_params, @client.original_id, @channel.name)
+    Message.create!(body: message_params, client: @client, channel: @channel)
+
+    head 200
+  end
+
   private
 
   def find_client
@@ -49,5 +56,9 @@ class Api::V1::ClientsController < Api::V1::BaseController
 
   def find_channel
     @channel = Channel.find_by(id: params[:channel_id])
+  end
+
+  def message_params
+    params.require(:client).permit(:message)
   end
 end

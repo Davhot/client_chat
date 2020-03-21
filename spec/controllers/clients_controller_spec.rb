@@ -102,6 +102,27 @@ RSpec.describe Api::V1::ClientsController, type: :controller do
       expect(count_clients_before_subscribe).to eq(0)
       expect(count_clients_after_subscribe).to eq(1)
       expect(count_clients_after_unsubscribe).to eq(0)
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'message' do
+    it 'publish' do
+      stub_request(:put, "#{ENV['BEAVER_URL']}/client/#{client.original_id}/subscribe")
+        .to_return(status: 200, body: '', headers: {})
+      stub_request(:put, "#{ENV['BEAVER_URL']}/client/#{client.original_id}/unsubscribe")
+        .to_return(status: 200, body: '', headers: {})
+
+      count_clients_before_subscribe = channel.clients.count
+      put :subscribe, params: { id: client.id, channel_id: channel.id }
+      count_clients_after_subscribe = channel.reload.clients.count
+      put :unsubscribe, params: { id: client.id, channel_id: channel.id }
+      count_clients_after_unsubscribe = channel.reload.clients.count
+
+      expect(count_clients_before_subscribe).to eq(0)
+      expect(count_clients_after_subscribe).to eq(1)
+      expect(count_clients_after_unsubscribe).to eq(0)
+      expect(response).to have_http_status(:success)
     end
   end
 end

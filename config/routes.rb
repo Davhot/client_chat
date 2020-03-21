@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         member do
           put :subscribe
           put :unsubscribe
+          post :send_message
         end
       end
     end

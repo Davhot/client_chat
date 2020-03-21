@@ -44,7 +44,7 @@ Metrics/BlockLength:
     - 'lib/tasks/templates_migration.rake'
     - 'spec/**/*'
 
-Metrics/LineLength:
+Layout/LineLength:
   IgnoreCopDirectives: true
   Exclude:
     - 'spec/**/*'
@@ -63,10 +63,6 @@ Style/RescueModifier:
   Exclude:
     - 'spec/support/shared_examples/raw_transactions_shared.rb'
     - 'spec/services/raw_transaction_persist_service_spec.rb'
-
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'app/controllers/**/**/*'
 
 Style/ClassAndModuleChildren:
   Enabled: False

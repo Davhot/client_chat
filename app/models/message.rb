@@ -4,4 +4,10 @@
 class Message < ApplicationRecord
   belongs_to :client
   belongs_to :channel
+
+  before_create :check_client_channel_association
+
+  def check_client_channel_association
+    client.channels.exists?(channel.id)
+  end
 end

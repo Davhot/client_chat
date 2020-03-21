@@ -3,5 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'Message validates' do
+    let(:channel) { create(:channel) }
+    let(:client) { create(:client, channels: [channel]) }
+
+    subject { create(:message, channel: channel, client: client) }
+
+    it 'save valid object' do
+      expect(subject).to be_valid
+      expect(subject.check_client_channel_association).to be_truthy
+    end
+  end
 end

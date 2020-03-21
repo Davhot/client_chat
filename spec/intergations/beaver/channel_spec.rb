@@ -7,6 +7,12 @@ WebMock.disable_net_connect!(allow: 'http://localhost:8080')
 RSpec.describe BeaverClient::Channel do
   describe 'Channel' do
     let(:channel_name) { 'test' }
+
+    before(:each) do
+      getting_channel = BeaverClient::Channel.get(channel_name)
+      BeaverClient::Channel.delete(channel_name) if getting_channel['error'].blank?
+    end
+
     it 'create and delete' do
       created_channel = described_class.create(channel_name)
       deleted_channel = described_class.delete(channel_name)

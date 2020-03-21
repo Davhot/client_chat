@@ -55,5 +55,20 @@ module BeaverClient::Client
 
       true
     end
+
+    def send_message(message, client_id, channel_name)
+      data = {
+        message: message,
+        from: client_id
+      }
+      response = BeaverClient.send_request(
+        url: ENV['BEAVER_URL'] + '/publish',
+        body: { channel: channel_name, data: data.to_json },
+        method: 'post'
+      )
+      raise response.inspect unless response[:valid] && response[:status] == 200
+
+      true
+    end
   end
 end
