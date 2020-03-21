@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :client do
+    original_id { 'test_id' }
     token { 'MyString' }
-    name { 'MyString' }
+    email { 'some@email.com' }
   end
 end

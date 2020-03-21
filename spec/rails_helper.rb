@@ -25,6 +25,8 @@ require 'database_cleaner/active_record'
 
 require 'webmock/rspec'
 
+require 'byebug'
+
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.extend ControllerMacros, type: :controller

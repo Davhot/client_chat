@@ -2,16 +2,17 @@
 
 # Контроллер категорий
 class Api::V1::ClientsController < Api::V1::BaseController
-  before_action :find_client, only: %i[show update destroy]
+  before_action :find_client, only: %i[show destroy]
 
   def index
     @clients = Client.all.order(created_at: :desc)
     render 'index.json', status: :ok
   end
 
+  # TODO: при выполнении запроса передавать id пользователя (User)
   def create
-    # BeaverClient::Client.create(client_params[:name])
-    client = Client.create(client_params)
+    beaver_client = BeaverClient::Client.create
+    client = Client.create_beaver(beaver_client)
     render json: client, status: :created
   end
 
@@ -19,24 +20,14 @@ class Api::V1::ClientsController < Api::V1::BaseController
     render 'show.json', status: :ok
   end
 
-  def update
-    @client.update(client_params)
-
-    render json: @client, status: :ok
-  end
-
   def destroy
-    # BeaverClient::Client.delete(@client.name)
+    BeaverClient::Client.delete(@client.original_id)
     @client.destroy
 
     head 204
   end
 
   private
-
-  def client_params
-    params.require(:client).permit(:name)
-  end
 
   def find_client
     @client = Client.find_by(id: params[:id])

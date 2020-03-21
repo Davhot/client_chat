@@ -67,3 +67,6 @@ Style/RescueModifier:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/**/**/*'
+
+Style/ClassAndModuleChildren:
+  Enabled: False
