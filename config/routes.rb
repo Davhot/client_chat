@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
       resources :channels
-      resources :clients
+      resources :clients do
+        member do
+          put :subscribe
+          put :unsubscribe
+        end
+      end
     end
   end
 end

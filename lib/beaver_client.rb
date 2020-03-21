@@ -9,16 +9,8 @@ module BeaverClient
         'X-AUTH-TOKEN' => ENV['BEAVER_TOKEN']
       }
       begin
-        response = HTTP.headers(headers)
-        response =
-          case method
-          when 'post'
-            response.post(url, body: JSON.dump(body))
-          when 'get'
-            response.get(url, body: JSON.dump(body))
-          when 'delete'
-            response.delete(url, body: JSON.dump(body))
-          end
+        response = HTTP.headers(headers).send(method, url, body: JSON.dump(body))
+
         if response.try(:body).present?
           body = response.body.to_s
           body = JSON.parse(body).to_h if body.present?

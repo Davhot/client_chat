@@ -6,6 +6,8 @@ WebMock.disable_net_connect!(allow: 'http://localhost:8080')
 
 RSpec.describe BeaverClient::Client do
   describe 'Client' do
+    let(:channel_name) { 'test' }
+
     it 'create and delete' do
       created_client = described_class.create
       deleted_client = described_class.delete(created_client['id'])
@@ -27,6 +29,24 @@ RSpec.describe BeaverClient::Client do
       expect_fields = %w[channels created_at id token updated_at]
       expect(data).to match_array(expect_fields)
       expect(data.size).to eq(expect_fields.size)
+    end
+
+    it 'subscribe/unsubscribe client' do
+      created_client = described_class.create
+      BeaverClient::Channel.create(channel_name)
+
+      subscribed_client = described_class.subscribe(created_client['id'], channel_name)
+      getting_channel1 = BeaverClient::Channel.get(channel_name)
+      unsubscribed_client = described_class.unsubscribe(created_client['id'], channel_name)
+      getting_channel2 = BeaverClient::Channel.get(channel_name)
+
+      BeaverClient::Channel.delete(channel_name)
+      described_class.delete(created_client['id'])
+
+      expect(subscribed_client).to be_truthy
+      expect(getting_channel1['subscribers_count']).to eq(1)
+      expect(unsubscribed_client).to be_truthy
+      expect(getting_channel2['subscribers_count']).to eq(0)
     end
   end
 end
