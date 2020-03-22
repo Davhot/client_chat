@@ -51,26 +51,33 @@ export default function Login(props) {
   return (
     <React.Fragment>
       <div className="container">
-        <form className="category-form" onSubmit={handleSubmit}>
-          <div className="category-body">
-            <input className="category-body-input"
-                   autoFocus
-                   type="email"
-                   value={email}
-                   onChange={e => setEmail(e.target.value)}
-                   placeholder="email"
-                   autoComplete="email" />
+        <div className="login-form-wrapper">
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="login-body">
+              <input className="login-body-input"
+                     autoFocus
+                     type="email"
+                     value={email}
+                     onChange={e => setEmail(e.target.value)}
+                     placeholder="email"
+                     autoComplete="email" />
+            </div>
+            <div className="login-body">
+              <input className="login-body-input"
+                     value={password}
+                     type="password"
+                     onChange={e => setPassword(e.target.value)}
+                     placeholder="password"
+                     autoComplete="new-password" />
+            </div>
+            <div className="submit-wrapper">
+              <input type="submit" className="form-button" value="Login"/>
+            </div>
+          </form>
+          <div className="login-footer">
+            <a href='#'>Forgot Password?</a>
           </div>
-          <div className="category-body">
-            <input className="category-body-input"
-                   value={password}
-                   type="password"
-                   onChange={e => setPassword(e.target.value)}
-                   placeholder="password"
-                   autoComplete="new-password" />
-          </div>
-          <input type="submit" className="form-button" value="Login"/>
-        </form>
+        </div>
       </div>
     </React.Fragment>
   );
