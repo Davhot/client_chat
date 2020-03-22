@@ -1,7 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet'
+
+import Login from './Login'
 
 import configureStore from '../configureStore'
 const store = configureStore()
@@ -17,6 +19,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={() => { return (<h1>Hello</h1>) }} />
+            <Route exact path="/login" component={Login} />
           </Switch>
         </BrowserRouter>
       </Provider>
