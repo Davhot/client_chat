@@ -40,7 +40,6 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'webdrivers'
   gem 'webmock'

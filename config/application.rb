@@ -14,5 +14,7 @@ module ClientChat
     config.load_defaults 6.0
 
     config.eager_load_paths << Rails.root.join('lib')
+
+    config.hosts.clear
   end
 end
