@@ -5,5 +5,6 @@ FactoryBot.define do
     original_id { 'test_id' }
     token { 'MyString' }
     email { 'some@email.com' }
+    user { create(:user) }
   end
 end

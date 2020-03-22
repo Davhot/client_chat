@@ -4,16 +4,18 @@
 class Api::V1::ClientsController < Api::V1::BaseController
   before_action :find_client, only: %i[show destroy subscribe unsubscribe send_message]
   before_action :find_channel, only: %i[subscribe unsubscribe send_message]
+  before_action :check_user_client, only: %i[show destroy subscribe unsubscribe send_message]
 
   def index
     @clients = Client.all.order(created_at: :desc)
     render 'index.json', status: :ok
   end
 
-  # TODO: при выполнении запроса передавать id пользователя (User)
   def create
     beaver_client = BeaverClient::Client.create
+    beaver_client[:user_id] = current_user.id
     client = Client.create_beaver(beaver_client)
+
     render json: client, status: :created
   end
 
@@ -60,5 +62,9 @@ class Api::V1::ClientsController < Api::V1::BaseController
 
   def message_params
     params.require(:client).permit(:message)
+  end
+
+  def check_user_client
+    raise ActiveRecord::RecordNotFound if @client.user != current_user
   end
 end

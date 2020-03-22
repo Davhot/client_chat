@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ClientsController, type: :controller do
+  login_user
   render_views
 
   include ApiHelper
 
-  let(:client) { create(:client) }
+  let(:client) { create(:client, user: User.last) }
   let(:channel) { create(:channel) }
   let(:beaver_client_params) do
     {
@@ -57,7 +58,7 @@ RSpec.describe Api::V1::ClientsController, type: :controller do
     end
 
     it 'check format' do
-      2.times { create :client }
+      2.times { create(:client, user: User.last) }
 
       get :index, format: :json
 
