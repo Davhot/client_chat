@@ -231,6 +231,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    rb-readline (0.5.5)
     react-rails (2.6.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
@@ -364,6 +365,7 @@ DEPENDENCIES
   puma (~> 4.0)
   rails (~> 6.0.0)
   rails-controller-testing
+  rb-readline
   react-rails
   rspec-rails (~> 3.8)
   rspec-rails-swagger

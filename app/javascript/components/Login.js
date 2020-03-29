@@ -1,18 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 
 import toaster from 'toasted-notes';
 import cookie from 'react-cookies'
 
 export default function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   function render_root_page() {
     location.href = '/'
-  }
-
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
   }
 
   async function loginRequest(data) {
@@ -37,38 +31,51 @@ export default function Login(props) {
     toaster.notify(notify_message, { duration: 2000, position: 'top-right' });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function onSubmit(values) {
     let params = {
       user: {
-        email: email,
-        password: password
+        email: values.email,
+        password: values.password
       }
     }
     loginRequest(params).catch(error => console.log(error));
   }
 
+  const { handleSubmit, register, errors } = useForm();
+
   return (
     <React.Fragment>
       <div className="container">
         <div className="login-form-wrapper">
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
             <div className="login-body">
-              <input className="login-body-input"
+              <input className={errors.email ? "login-body-input error-field" : "login-body-input"}
                      autoFocus
                      type="email"
-                     value={email}
-                     onChange={e => setEmail(e.target.value)}
                      placeholder="email"
-                     autoComplete="email" />
+                     autoComplete="email"
+                     name="email"
+                     ref={register({
+                            required: 'Required',
+                            pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                              message: "invalid email address"
+                            }
+                         })}/>
+              <div className="error-message">
+                {errors.email && errors.email.message}
+              </div>
             </div>
             <div className="login-body">
-              <input className="login-body-input"
-                     value={password}
+              <input className={errors.password ? "login-body-input error-field" : "login-body-input"}
                      type="password"
-                     onChange={e => setPassword(e.target.value)}
                      placeholder="password"
-                     autoComplete="new-password" />
+                     name="password"
+                     autoComplete="new-password"
+                     ref={ register({ required: 'Required' }) }/>
+              <div className="error-message">
+                {errors.password && errors.password.message}
+              </div>
             </div>
             <div className="submit-wrapper">
               <input type="submit" className="form-button" value="Login"/>

@@ -14,12 +14,13 @@ body > div:first-child
 .login-form
   padding: 2em
 
+.login-body
+  margin-bottom: 1em
 .login-body-input
   border: none
   text-align: center
   font-size: 1.5em
   background-color: #E9E9E9
-  margin-bottom: 1em
   border-radius: 0.3em
   color: #555
   width: 15em
@@ -32,7 +33,12 @@ body > div:first-child
   &:focus
     outline: none !important
     box-shadow: 0 2px 3px #aaa
-
+.error-field
+  border: 1px solid red
+.error-message
+  text-align: center
+  color: red
+  margin-top: 0.1em
 .form-button:hover
   -webkit-box-shadow: 0 10px 20px rgba(0,0,0,.09), 0 6px 6px rgba(0,0,0,.13)
   box-shadow: 0 10px 20px rgba(0,0,0,.09), 0 6px 6px rgba(0,0,0,.13)
