@@ -4,13 +4,13 @@ import { useForm } from "react-hook-form";
 import toaster from 'toasted-notes';
 import cookie from 'react-cookies'
 
-export default function Login(props) {
+export default function Signup(props) {
   function render_root_page() {
     location.href = '/'
   }
 
   async function loginRequest(data) {
-    const response = await fetch('/login_api', {
+    const response = await fetch('/signup_api', {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       mode: 'cors', // no-cors, cors, *same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -22,7 +22,7 @@ export default function Login(props) {
     });
     let notify_message;
     if(response.status != 200) {
-      notify_message = "Неверный логин/пароль";
+      notify_message = "Такой email уже зарегистрирован!";
     } else {
       cookie.save('Authorization', response.headers.get('Authorization'));
       notify_message = "Вы успешно вошли!";
@@ -35,19 +35,20 @@ export default function Login(props) {
     let params = {
       user: {
         email: values.email,
-        password: values.password
+        password: values.password,
+        password_confirmation: values.password_confirmation
       }
     }
     loginRequest(params).catch(error => console.log(error));
   }
 
+  const { handleSubmit, register, errors, watch } = useForm();
+
   function check_auth() {
     if (cookie.load('Authorization')) { render_root_page() }
   }
 
-  const { handleSubmit, register, errors } = useForm();
-
-  check_auth();
+  check_auth()
   return (
     <React.Fragment>
       <div className="container">
@@ -77,21 +78,30 @@ export default function Login(props) {
                      placeholder="password"
                      name="password"
                      autoComplete="new-password"
-                     ref={ register({ required: 'Required' }) }/>
+                     ref={ register({ required: true, minLength: 6 }) }/>
               <div className="error-message">
-                {errors.password && errors.password.message}
+                {errors.password && errors.password.type === "required" && "Required"}
+                {errors.password && errors.password.type === "minLength" && "Не меньше 6 символов"}
+              </div>
+            </div>
+            <div className="login-body">
+              <input className={errors.password_confirmation ? "login-body-input error-field" : "login-body-input"}
+                     type="password"
+                     placeholder="password confirmation"
+                     name="password_confirmation"
+                     autoComplete="new-password_confirmation"
+                     ref={ register({ validate: (value) => value === watch('password') }) }/>
+              <div className="error-message">
+                {errors.password_confirmation && errors.password_confirmation.type === "validate" && "Должно совпадать с полем пароль"}
               </div>
             </div>
             <div className="submit-wrapper">
-              <input type="submit" className="form-button" value="Login"/>
+              <input type="submit" className="form-button" value="Sign up"/>
             </div>
           </form>
           <div className="login-footer">
-            <a href='#'>Forgot Password?</a>
-            <div>
-              <span>Are you new?</span>
-              <a href='/sign_up'>SIGN UP</a>
-            </div>
+            <span>already have an account?</span>
+            <a href='/login'>SIGN IN</a>
           </div>
         </div>
       </div>
