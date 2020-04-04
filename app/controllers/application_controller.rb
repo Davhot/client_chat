@@ -2,7 +2,7 @@
 
 # Базовый класс контроллеров
 class ApplicationController < ActionController::Base
-  protect_from_forgery unless: -> { request.format.json? }
+  protect_from_forgery unless: :json_request?
 
   def render_resource(resource)
     if resource.errors.empty?
@@ -23,5 +23,9 @@ class ApplicationController < ActionController::Base
         }
       ]
     }, status: :bad_request
+  end
+
+  def json_request?
+    request.format.json?
   end
 end

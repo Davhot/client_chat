@@ -8,10 +8,11 @@ SimpleCov.start 'rails' do
 end
 
 require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
+
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 
-abort('The Rails environment is running in production mode!') if Rails.env.production?
+abort('The Rails environment is running not in test mode!') unless Rails.env.test?
 require 'rspec/rails'
 
 require 'capybara/rails'

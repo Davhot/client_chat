@@ -38,7 +38,7 @@ RSpec.describe 'POST /login_api', type: :request do
     before { post url }
 
     it 'returns unathorized status' do
-      expect(response.status).to eq 401
+      expect(response.headers['Authorization']).to be_blank
     end
   end
 end
