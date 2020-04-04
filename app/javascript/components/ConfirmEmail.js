@@ -4,24 +4,28 @@ import { useForm } from "react-hook-form";
 import toaster from 'toasted-notes';
 import cookie from 'react-cookies'
 
-export default function ForgotPassword(props) {
+export default function ConfirmEmail(props) {
   function render_root_page() {
-    location.href = '/'
+    location.href = '/login'
   }
 
-  async function loginRequest(data) {
-    render_root_page()
-    // TODO
+  async function resentEmailRequest(data) {
+    const response = await fetch('/confirmations/resend_email', {
+      method: 'PATCH',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    let notify_message;
+    if(response.status != 200) {
+      toaster.notify("Пользователь не найден.", { duration: 2000, position: 'top-right' });
+    } else {
+      render_root_page();
+    }
   }
 
   function onSubmit(values) {
-    let params = {
-      user: {
-        email: values.email,
-        password: values.password
-      }
-    }
-    loginRequest(params).catch(error => console.log(error));
+    let params = { email: values.email }
+    resentEmailRequest(params).catch(error => console.log(error));
   }
 
   function check_auth() {
@@ -40,7 +44,7 @@ export default function ForgotPassword(props) {
               <input className={errors.email ? "login-body-input error-field" : "login-body-input"}
                      autoFocus
                      type="email"
-                     placeholder="email"
+                     placeholder="email confirmation"
                      autoComplete="email"
                      name="email"
                      ref={register({
@@ -59,7 +63,6 @@ export default function ForgotPassword(props) {
             </div>
           </form>
           <div className="login-footer">
-            <div><a href='/confirm_email'>CONFIRM EMAIL</a></div>
             <a href='/login'>SIGN IN</a>
           </div>
         </div>

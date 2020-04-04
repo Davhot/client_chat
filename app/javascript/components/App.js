@@ -9,6 +9,7 @@ import Login from './Login'
 import Signup from './Signup'
 import ForgotPassword from './ForgotPassword'
 import Header from './Header'
+import ConfirmEmail from './ConfirmEmail'
 
 import configureStore from '../configureStore'
 const store = configureStore()
@@ -27,6 +28,7 @@ class App extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/sign_up" component={Signup} />
             <Route exact path="/forgot_password" component={ForgotPassword} />
+            <Route exact path="/confirm_email" component={ConfirmEmail} />
           </Switch>
         </BrowserRouter>
       </Provider>

@@ -9,7 +9,7 @@ export default function Signup(props) {
     location.href = '/'
   }
 
-  async function loginRequest(data) {
+  async function signupRequest(data) {
     const response = await fetch('/signup_api', {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -17,13 +17,11 @@ export default function Signup(props) {
     });
     let notify_message;
     if(response.status != 200) {
-      notify_message = "Такой email уже зарегистрирован!";
+      toaster.notify("Такой email уже зарегистрирован!", { duration: 2000, position: 'top-right' });
     } else {
       cookie.save('Authorization', response.headers.get('Authorization'));
-      notify_message = "Вы успешно вошли!";
       render_root_page();
     }
-    toaster.notify(notify_message, { duration: 2000, position: 'top-right' });
   }
 
   function onSubmit(values) {
@@ -34,7 +32,7 @@ export default function Signup(props) {
         password_confirmation: values.password_confirmation
       }
     }
-    loginRequest(params).catch(error => console.log(error));
+    signupRequest(params).catch(error => console.log(error));
   }
 
   const { handleSubmit, register, errors, watch } = useForm();

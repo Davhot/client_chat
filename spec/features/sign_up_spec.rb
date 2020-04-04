@@ -26,6 +26,7 @@ RSpec.describe 'POST /signup_api', type: :request do
 
     it 'returns a new user' do
       expect(body['email']).to eq(params[:user][:email])
+      expect(response.headers['Authorization']).to be_present
     end
   end
 

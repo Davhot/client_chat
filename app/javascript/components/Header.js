@@ -17,13 +17,11 @@ class Header extends React.Component {
     });
     let notify_message;
     if(response.status != 204) {
-      notify_message = "Ошибка!";
+      toaster.notify("Ошибка!", { duration: 2000, position: 'top-right' });
     } else {
       cookie.remove('Authorization');
-      notify_message = "Вы успешно вышли!";
       redirect_on_unauthorize();
     }
-    toaster.notify(notify_message, { duration: 2000, position: 'top-right' });
   }
 
   async send_email() {
@@ -37,6 +35,10 @@ class Header extends React.Component {
     });
     let notify_message;
     if(response.status != 200) {
+      response.json().then(function(data) {
+        // `data` is the parsed version of the JSON returned from the above endpoint.
+        console.log(data);  // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+      });
       notify_message = "Ошибка!";
     } else {
       notify_message = "Успешно!";

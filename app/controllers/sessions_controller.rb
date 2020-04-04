@@ -7,6 +7,7 @@ class SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
+    flash.now[:success] = 'Вы успешно вошли!'
     render json: resource
   end
 

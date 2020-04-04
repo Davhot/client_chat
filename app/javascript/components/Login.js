@@ -17,13 +17,11 @@ export default function Login(props) {
     });
     let notify_message;
     if(response.status != 200) {
-      notify_message = "Неверный логин/пароль";
+      toaster.notify("Неверный логин/пароль", { duration: 2000, position: 'top-right' });
     } else {
       cookie.save('Authorization', response.headers.get('Authorization'));
-      notify_message = "Вы успешно вошли!";
       render_root_page();
     }
-    toaster.notify(notify_message, { duration: 2000, position: 'top-right' });
   }
 
   function onSubmit(values) {

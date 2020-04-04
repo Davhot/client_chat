@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'static#index'
+
   devise_for :users,
              path: '',
              path_names: {
@@ -10,10 +12,13 @@ Rails.application.routes.draw do
              },
              controllers: {
                sessions: 'sessions',
-               registrations: 'registrations'
+               registrations: 'registrations',
+               confirmations: 'confirmations'
              }
 
-  root 'static#index'
+  devise_scope :user do
+    patch 'confirmations/resend_email'
+  end
 
   namespace :api, constraints: { format: 'json' } do
     namespace :v1 do
