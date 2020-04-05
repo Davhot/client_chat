@@ -11,6 +11,7 @@ export default function ConfirmEmail(props) {
 
   async function resentEmailRequest(data) {
     const response = await fetch('/confirmations/resend_email', {
+      credentials: 'omit',
       method: 'PATCH',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

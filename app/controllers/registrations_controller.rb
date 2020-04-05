@@ -13,8 +13,3 @@ class RegistrationsController < Devise::RegistrationsController
     render_resource(resource)
   end
 end
-
-# users = User.where('confirmation_token IS NOT NULL')
-# users.each do |user|
-#   user.send_confirmation_instructions
-# end

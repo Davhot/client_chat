@@ -3,7 +3,8 @@ import cookie from 'react-cookies'
 import toaster from 'toasted-notes';
 
 function redirect_on_unauthorize() {
-  if (!cookie.load('Authorization')) {
+  let token = cookie.load('Authorization');
+  if (!token || token == 'null') {
     cookie.remove('Authorization')
     location.href = '/login';
   }

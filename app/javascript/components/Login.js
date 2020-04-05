@@ -11,6 +11,7 @@ export default function Login(props) {
 
   async function loginRequest(data) {
     const response = await fetch('/login_api', {
+      credentials: 'omit',
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -35,7 +36,8 @@ export default function Login(props) {
   }
 
   function check_auth() {
-    if (cookie.load('Authorization')) { render_root_page() }
+    let token = cookie.load('Authorization');
+    if (token && token != 'null') { render_root_page() }
   }
 
   const { handleSubmit, register, errors } = useForm();

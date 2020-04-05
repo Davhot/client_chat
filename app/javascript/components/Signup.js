@@ -11,6 +11,7 @@ export default function Signup(props) {
 
   async function signupRequest(data) {
     const response = await fetch('/signup_api', {
+      credentials: 'omit',
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -38,7 +39,8 @@ export default function Signup(props) {
   const { handleSubmit, register, errors, watch } = useForm();
 
   function check_auth() {
-    if (cookie.load('Authorization')) { render_root_page() }
+    let token = cookie.load('Authorization');
+    if (token && token != 'null') { render_root_page() }
   }
 
   check_auth()

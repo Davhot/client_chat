@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="login-form-wrapper">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'login-form' }) do |f| %>
+      <% if resource.errors.any? %>
+        <% flash_messages = resource.errors.full_messages.map { |mes| { text: mes, id: nil, type: nil } } %>
+        <%= react_component 'FlashMessages', messages: flash_messages %>
+      <% end %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <div class="login-body">
+        <%= f.password_field :password,
+                              autofocus: true,
+                              autocomplete: 'new-password',
+                              class: 'login-body-input',
+                              placeholder: 'New password' %>
+      </div>
+
+      <div class="login-body">
+        <%= f.password_field :password_confirmation,
+                             autocomplete: 'new-password',
+                             class: 'login-body-input',
+                             placeholder: 'Confirm new password' %>
+      </div>
+
+      <div class="submit-wrapper">
+        <%= f.submit "Change password", class: 'form-button' %>
+      </div>
+    <% end %>
+
+    <div class="login-footer">
+      <a href='/login'>SIGN IN</a>
+    </div>
+  </div>
+</div>

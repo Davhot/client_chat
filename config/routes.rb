@@ -13,11 +13,13 @@ Rails.application.routes.draw do
              controllers: {
                sessions: 'sessions',
                registrations: 'registrations',
-               confirmations: 'confirmations'
+               confirmations: 'confirmations',
+               passwords: 'passwords'
              }
 
   devise_scope :user do
     patch 'confirmations/resend_email'
+    patch 'passwords/send_password_instructions'
   end
 
   namespace :api, constraints: { format: 'json' } do

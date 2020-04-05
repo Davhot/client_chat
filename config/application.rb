@@ -16,5 +16,10 @@ module ClientChat
     config.eager_load_paths << Rails.root.join('lib')
 
     config.hosts.clear
+
+    # For devise acceptance json
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
   end
 end

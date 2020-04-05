@@ -9,23 +9,29 @@ export default function ForgotPassword(props) {
     location.href = '/'
   }
 
-  async function loginRequest(data) {
-    render_root_page()
-    // TODO
+  async function passwordInstructionsRequest(data) {
+    const response = await fetch('/passwords/send_password_instructions', {
+      credentials: 'omit',
+      method: 'PATCH',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    let notify_message;
+    if(response.status != 200) {
+      toaster.notify("Пользователь не найден.", { duration: 2000, position: 'top-right' });
+    } else {
+      render_root_page();
+    }
   }
 
   function onSubmit(values) {
-    let params = {
-      user: {
-        email: values.email,
-        password: values.password
-      }
-    }
-    loginRequest(params).catch(error => console.log(error));
+    let params = { email: values.email }
+    passwordInstructionsRequest(params).catch(error => console.log(error));
   }
 
   function check_auth() {
-    if (cookie.load('Authorization')) { render_root_page() }
+    let token = cookie.load('Authorization');
+    if (token && token != 'null') { render_root_page() }
   }
 
   const { handleSubmit, register, errors } = useForm();
