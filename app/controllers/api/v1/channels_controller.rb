@@ -4,13 +4,6 @@
 class Api::V1::ChannelsController < Api::V1::BaseController
   before_action :find_channel, only: %i[show update destroy]
 
-  def send_email
-    # byebug
-    current_user.send_confirmation_instructions
-    # UserMailer.with(user: current_user).welcome_email.deliver_later
-    head 200
-  end
-
   def index
     @channels = Channel.all.order(created_at: :desc)
     render 'index.json', status: :ok
