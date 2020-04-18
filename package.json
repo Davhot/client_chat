@@ -24,6 +24,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-select": "^3.1.0",
+    "react-sidebar": "^3.0.2",
     "react-spring": "^8.0.27",
     "react-validation": "^3.0.7",
     "react_ujs": "^2.6.1",
