@@ -1,4 +1,6 @@
 $mobile-size: 801px
+$main-color: #8C3F87
+$gray: #F2F2F2
 
 html, body
   font-size: 1em
@@ -8,7 +10,18 @@ html, body
   padding: 0
   font-family: sans-serif
   height: 100%
-  background-color: #F2F2F2
+  background-color: $gray
 
 @import "login"
-@import "admin"
+@import "sidebar"
+@import "header"
+
+.btn
+  padding: 10px 16px
+  font-size: 1em
+  line-height: 1.3333333
+  border-radius: 10px
+  color: white
+  background-color: $main-color
+.btn:focus
+  outline: none

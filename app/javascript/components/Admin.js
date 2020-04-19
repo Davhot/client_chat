@@ -6,7 +6,8 @@ import Header from './Header'
 import AdminWorkspace from './AdminWorkspace'
 import Footer from './Footer'
 
-import { onSetSidebarOpen } from "./SidebarActions"
+import { onSetSidebarOpen } from "./SidebarActions";
+import { redirect_on_unauthorize } from "./user/Actions";
 
 import ReactSidebar from "react-sidebar";
 
@@ -19,22 +20,19 @@ import {
 const routes = [
   {
     path: "/admin/channels",
-    main: () => <h2><Header/><p>channels</p></h2>
+    main: () => <Header children=<h1>channels</h1> />
   },
   {
     path: "/admin/clients",
-    main: () => <h2><Footer/><p>clients</p></h2>
+    main: () => <Header children=<h1>clients</h1> />
   }
 ];
 
 class Admin extends React.Component {
   render () {
+    redirect_on_unauthorize()
     return (
       <React.Fragment>
-        <button onClick={() => this.props.onSetSidebarOpen(true)}>
-          Open sidebar
-        </button>
-        <Header/>
         <Router>
           <Switch>
             {routes.map((route, index) => (
@@ -63,7 +61,7 @@ class Admin extends React.Component {
                       }
                     }}
           >
-            <p>1</p>
+            <p></p>
           </ReactSidebar>
         </Router>
       </React.Fragment>
