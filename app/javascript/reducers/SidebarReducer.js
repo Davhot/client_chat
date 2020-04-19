@@ -3,5 +3,5 @@ export function sidebar_reducer(state, action) {
     case "SET_SIDEBAR_OPEN":
       return { ...state, sidebarOpen: action.sidebarOpen };
   }
-  return state;
+  return null;
 };

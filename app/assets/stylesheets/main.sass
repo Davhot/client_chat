@@ -1,6 +1,7 @@
 $mobile-size: 801px
 $main-color: #8C3F87
 $gray: #F2F2F2
+$hr-color: #DDD
 
 html, body
   font-size: 1em
@@ -23,5 +24,18 @@ html, body
   border-radius: 10px
   color: white
   background-color: $main-color
+  cursor: pointer
 .btn:focus
   outline: none
+
+.table
+  margin: 1em
+  border-collapse: collapse
+  td
+    border: none
+    border-top: 1px solid $hr-color
+    padding: 0.5em
+  tr
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)
+  tr:hover
+    background: darken($gray, 10%)

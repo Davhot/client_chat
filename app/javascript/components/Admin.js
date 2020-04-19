@@ -5,6 +5,8 @@ import Sidebar from './Sidebar'
 import Header from './Header'
 import AdminWorkspace from './AdminWorkspace'
 import Footer from './Footer'
+import ManageChannels from './channels/ManageChannels'
+import ManageClients from './ManageClients'
 
 import { onSetSidebarOpen } from "./SidebarActions";
 import { redirect_on_unauthorize } from "./user/Actions";
@@ -20,11 +22,27 @@ import {
 const routes = [
   {
     path: "/admin/channels",
-    main: () => <Header children=<h1>channels</h1> />
+    main: () =>
+      <React.Fragment>
+        <Header children=<h1>channels</h1> />
+        <ManageChannels/>
+      </React.Fragment>
   },
   {
     path: "/admin/clients",
-    main: () => <Header children=<h1>clients</h1> />
+    main: () =>
+      <React.Fragment>
+        <Header children=<h1>clients</h1> />
+        <ManageClients/>
+      </React.Fragment>
+  },
+  {
+    path: "/admin",
+    main: () =>
+      <React.Fragment>
+        <Header children=<h1>clients</h1> />
+        <ManageClients/>
+      </React.Fragment>
   }
 ];
 
@@ -39,8 +57,8 @@ class Admin extends React.Component {
               <Route
                 key={index}
                 path={route.path}
-                exact={route.exact}
-                children={<route.main />}
+                exact={true}
+                children={<route.main/>}
               />
             ))}
           </Switch>

@@ -32,7 +32,15 @@ async function logoutRequest() {
 export function redirect_on_unauthorize() {
   let token = cookie.load('Authorization');
   if (!token || token == 'null') {
-    cookie.remove('Authorization')
+    cookie.remove('Authorization', { path: '/' })
     location.href = '/login';
   }
+}
+
+export function redirect_on_unauthorize_response(response) {
+  if (response.status == 401) {
+    cookie.remove('Authorization', { path: '/' })
+    location.href = '/login';
+  }
+  return response;
 }
