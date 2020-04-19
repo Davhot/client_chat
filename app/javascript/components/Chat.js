@@ -29,7 +29,7 @@ export default function Chat(props) {
 
   function log_out() {
     if(confirm('Are you sure?')){
-      this.logoutRequest().catch(error => console.log(error));
+      logoutRequest().catch(error => console.log(error));
     }
   }
 
@@ -60,7 +60,7 @@ export default function Chat(props) {
   redirect_on_unauthorize()
   return (
     <React.Fragment>
-      <button onClick={() => this.log_out()}>
+      <button onClick={() => log_out()}>
         <i className="fa fa-sign-out"></i>
         log out
       </button>

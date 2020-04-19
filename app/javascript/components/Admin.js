@@ -1,9 +1,12 @@
 import React from 'react'
+import { connect } from "react-redux";
 
 import Sidebar from './Sidebar'
 import Header from './Header'
 import AdminWorkspace from './AdminWorkspace'
 import Footer from './Footer'
+
+import { onSetSidebarOpen } from "./SidebarActions"
 
 import ReactSidebar from "react-sidebar";
 
@@ -25,22 +28,10 @@ const routes = [
 ];
 
 class Admin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebarOpen: false
-    };
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
-  }
-
-  onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
-  }
-
   render () {
     return (
       <React.Fragment>
-        <button onClick={() => this.onSetSidebarOpen(true)}>
+        <button onClick={() => this.props.onSetSidebarOpen(true)}>
           Open sidebar
         </button>
         <Header/>
@@ -60,8 +51,8 @@ class Admin extends React.Component {
           <ReactSidebar
             sidebarClassName="sidebar"
             sidebar=<Sidebar/>
-            open={this.state.sidebarOpen}
-            onSetOpen={this.onSetSidebarOpen}
+            open={this.props.sidebarOpen}
+            onSetOpen={this.props.onSetSidebarOpen}
             styles={{ sidebar: { background: "white" } }}
             styles={{
                       content: {
@@ -80,4 +71,6 @@ class Admin extends React.Component {
   }
 }
 
-export default Admin;
+function mapStateToProps(state) { return state }
+const mapDispatchToProps = { onSetSidebarOpen }; // выносим методы отдельно от компонента
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

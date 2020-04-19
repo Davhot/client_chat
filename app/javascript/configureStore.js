@@ -1,16 +1,13 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { sidebar_reducer } from './reducers/SidebarReducer'
 
 const initialState = {
-  categories: [],
-  notes: [],
-  mode: 'index',
-  current_category_id: null,
-  current_note_id: null
+  sidebarOpen: false
 };
 
 function rootReducer(state, action) {
-  const reducers = [(state, action) => { return state }];
+  const reducers = [sidebar_reducer];
 
   for (let reducer of reducers) {
     let res = reducer(state, action);
