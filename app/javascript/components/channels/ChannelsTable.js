@@ -4,11 +4,10 @@ import { createStructuredSelector } from "reselect";
 
 class ChannelsTable extends React.Component {
   render () {
-    console.log(this.props.channels)
     return (
       <table className="table">
         <tbody>
-          {this.props.channels.map((channel) =>
+          {this.props.channels.sort(function(a, b) { return a.id - b.id }).map((channel) =>
             <tr key={channel.id}>
               <td>{channel.name}</td>
               <td>

@@ -5,3 +5,10 @@ export function getChannelsSuccess(data) {
     channels: data
   };
 };
+
+export function createChannelSuccess(data) {
+  return {
+    type: 'CREATE_CHANNEL_SUCCESS',
+    channel: data
+  };
+};

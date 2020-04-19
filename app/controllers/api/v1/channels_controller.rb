@@ -11,8 +11,8 @@ class Api::V1::ChannelsController < Api::V1::BaseController
 
   def create
     BeaverClient::Channel.create(channel_params[:name])
-    channel = Channel.create(channel_params)
-    render json: channel, status: :created
+    @channel = Channel.create(channel_params)
+    render 'show.json', status: :created
   end
 
   def show

@@ -3,13 +3,17 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import ChannelsTable from './ChannelsTable'
+import AddChannelForm from './AddChannelForm'
 import { getChannelsRequest } from "./Requests";
 
 class ManageChannels extends React.Component {
   render () {
     this.props.getChannelsRequest();
     return (
-      <ChannelsTable/>
+      <React.Fragment>
+        <ChannelsTable/>
+        <AddChannelForm/>
+      </React.Fragment>
     )
   }
 }

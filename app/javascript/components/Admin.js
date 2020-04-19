@@ -62,7 +62,6 @@ class Admin extends React.Component {
               />
             ))}
           </Switch>
-          <Footer/>
 
           <ReactSidebar
             sidebarClassName="sidebar"
