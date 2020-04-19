@@ -2,7 +2,13 @@ import React from 'react'
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
+import { deleteChannelRequest } from "./Requests";
+
 class ChannelsTable extends React.Component {
+  delete_channel(channel_id) {
+    if (confirm('Are you sure?')) { this.props.deleteChannelRequest(channel_id) }
+  }
+
   render () {
     return (
       <table className="table">
@@ -16,7 +22,7 @@ class ChannelsTable extends React.Component {
                 </button>
               </td>
               <td>
-                <button className="btn" onClick={() => console.log("bin " + channel.id) }>
+                <button className="btn" onClick={() => this.delete_channel(channel.id) }>
                   <i className="fa fa-trash"></i>
                 </button>
               </td>
@@ -32,5 +38,5 @@ const structuredSelector = createStructuredSelector({
   channels: state => state.channels
 });
 
-const mapDispatchToProps = { };
+const mapDispatchToProps = { deleteChannelRequest };
 export default connect(structuredSelector, mapDispatchToProps)(ChannelsTable);

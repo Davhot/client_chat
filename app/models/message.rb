@@ -3,7 +3,7 @@
 # Сообщение в чате
 class Message < ApplicationRecord
   belongs_to :client
-  belongs_to :channel
+  belongs_to :channel, required: false
 
   before_create :check_client_channel_association
 

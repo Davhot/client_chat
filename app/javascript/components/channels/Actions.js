@@ -12,3 +12,10 @@ export function createChannelSuccess(data) {
     channel: data
   };
 };
+
+export function deleteChannelSuccess(channel_id) {
+  return {
+    type: 'DELETE_CHANNEL_SUCCESS',
+    channel_id: channel_id
+  };
+};

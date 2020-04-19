@@ -7,7 +7,8 @@ import { redirect_on_unauthorize_response } from "../user/Actions";
 
 import {
   getChannelsSuccess,
-  createChannelSuccess
+  createChannelSuccess,
+  deleteChannelSuccess
 } from "./Actions"
 
 function show_toaster_message(notify_message) {
@@ -48,4 +49,29 @@ export function createChannelRequest(data) {
       .then(show_toaster_message('Успешно создано!'))
       .catch(error => console.log(error));
   };
+};
+
+export function deleteChannelRequest(id) {
+  return dispatch => {
+    return fetch('/api/v1/channels/' + id, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': cookie.load('Authorization')
+      }
+    }).then(response => redirect_on_unauthorize_response(response))
+      .then(response => function (response) {
+          if (response.status == 204){
+            return response;
+          } else {
+            return null;
+          }
+        }
+      )
+      .then(response => dispatch(deleteChannelSuccess(id)))
+      .then(show_toaster_message('Успешно удалено!'))
+      .catch(error => console.log(error));
+  }
 };

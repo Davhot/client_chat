@@ -9,6 +9,8 @@ RSpec.describe Api::V1::ChannelsController, type: :controller do
   include ApiHelper
 
   let(:channel) { create(:channel) }
+  let(:client) { create(:client, user: User.last) }
+  let(:message) { create(:message, channel: channel, client: client) }
 
   before(:each) do
     stub_request(:any, "#{ENV['BEAVER_URL']}/channel")
@@ -85,6 +87,15 @@ RSpec.describe Api::V1::ChannelsController, type: :controller do
     it 'check destroy channel' do
       stub_request(:delete, "#{ENV['BEAVER_URL']}/channel/#{channel.name}")
         .to_return(status: 204, body: '', headers: {})
+
+      delete :destroy, params: { id: channel.id }
+      expect(Channel.count).to eq(0)
+    end
+
+    it 'check destroy channel with messages' do
+      stub_request(:delete, "#{ENV['BEAVER_URL']}/channel/#{channel.name}")
+        .to_return(status: 204, body: '', headers: {})
+      message
 
       delete :destroy, params: { id: channel.id }
       expect(Channel.count).to eq(0)
