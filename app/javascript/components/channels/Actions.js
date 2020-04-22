@@ -19,3 +19,21 @@ export function deleteChannelSuccess(channel_id) {
     channel_id: channel_id
   };
 };
+
+export function updateChannelSuccess(data) {
+  return {
+    type: 'UPDATE_CHANNEL_SUCCESS',
+    channel: data
+  };
+}
+
+export function setEditChannel(channel) {
+  var params = {
+    type: 'SET_EDIT_CHANNEL',
+    editChannel: channel
+  };
+
+  return dispatch => {
+    return dispatch(params);
+  };
+};

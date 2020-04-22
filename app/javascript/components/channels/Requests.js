@@ -8,7 +8,8 @@ import { redirect_on_unauthorize_response } from "../user/Actions";
 import {
   getChannelsSuccess,
   createChannelSuccess,
-  deleteChannelSuccess
+  deleteChannelSuccess,
+  updateChannelSuccess
 } from "./Actions"
 
 function show_toaster_message(notify_message) {
@@ -45,9 +46,14 @@ export function createChannelRequest(data) {
       body: JSON.stringify(data)
     }).then(response => redirect_on_unauthorize_response(response))
       .then(response => response.json())
-      .then(json => dispatch(createChannelSuccess(json)))
-      .then(show_toaster_message('Успешно создано!'))
-      .catch(error => console.log(error));
+      .then(json => {
+        if(json.error) {
+          return dispatch({type: 'ADD_ERROR', error: json});
+        } else {
+          return dispatch(createChannelSuccess(json));
+        }
+      })
+      .catch(err => dispatch({type: 'ADD_ERROR', error: err}));
   };
 };
 
@@ -75,3 +81,22 @@ export function deleteChannelRequest(id) {
       .catch(error => console.log(error));
   }
 };
+
+export function updateChannelRequest(data) {
+  return dispatch => {
+    return fetch('/api/v1/channels/' + data.channel.id, {
+      method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': cookie.load('Authorization')
+      },
+      body: JSON.stringify(data)
+    }).then(response => redirect_on_unauthorize_response(response))
+      .then(response => response.json())
+      .then(json => dispatch(updateChannelSuccess(json)))
+      .then(show_toaster_message('Успешно обновлено!'))
+      .catch(error => console.log(error));
+  };
+}

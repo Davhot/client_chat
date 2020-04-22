@@ -22,7 +22,7 @@ class Api::V1::ChannelsController < Api::V1::BaseController
   def update
     @channel.update(channel_params)
 
-    render json: @channel, status: :ok
+    render 'show.json', status: :ok
   end
 
   def destroy
