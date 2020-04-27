@@ -4,7 +4,7 @@ export function global_reducer(state, action) {
       return { ...state, editing: action.editing };
     case "ADD_ERROR":
       console.log(action.error)
-      return state;
+      return { ...state, errorMessages: [action.error] };
   }
   return null;
 };

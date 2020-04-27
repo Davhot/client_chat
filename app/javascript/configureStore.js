@@ -9,7 +9,8 @@ const initialState = {
   channels: [],
   editing: false,
   editChannel: {},
-  toasterMessages: []
+  toasterMessages: [],
+  errorMessages: []
 };
 
 function rootReducer(state, action) {

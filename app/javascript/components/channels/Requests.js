@@ -28,8 +28,14 @@ export function getChannelsRequest() {
       }
     }).then(response => redirect_on_unauthorize_response(response))
       .then(response => response.json())
-      .then(json => dispatch(getChannelsSuccess(json.data)))
-      .catch(error => console.log(error));
+      .then(json => {
+        if(json.error) {
+          return dispatch({type: 'ADD_ERROR', error: json});
+        } else {
+          return dispatch(getChannelsSuccess(json.data));
+        }
+      })
+      .catch(err => dispatch({type: 'ADD_ERROR', error: err}));
   }
 };
 
@@ -50,6 +56,7 @@ export function createChannelRequest(data) {
         if(json.error) {
           return dispatch({type: 'ADD_ERROR', error: json});
         } else {
+          show_toaster_message('Успешно создано!')
           return dispatch(createChannelSuccess(json));
         }
       })
@@ -68,17 +75,17 @@ export function deleteChannelRequest(id) {
         'Authorization': cookie.load('Authorization')
       }
     }).then(response => redirect_on_unauthorize_response(response))
-      .then(response => function (response) {
-          if (response.status == 204){
-            return response;
+      .then(response => response.json())
+      .then(json => {
+          if (!json.error){
+            show_toaster_message('Успешно удалено!');
+            return dispatch(deleteChannelSuccess(id));
           } else {
-            return null;
+            return dispatch({type: 'ADD_ERROR', error: json});
           }
         }
       )
-      .then(response => dispatch(deleteChannelSuccess(id)))
-      .then(show_toaster_message('Успешно удалено!'))
-      .catch(error => console.log(error));
+      .catch(err => dispatch({type: 'ADD_ERROR', error: err}));
   }
 };
 
@@ -95,8 +102,14 @@ export function updateChannelRequest(data) {
       body: JSON.stringify(data)
     }).then(response => redirect_on_unauthorize_response(response))
       .then(response => response.json())
-      .then(json => dispatch(updateChannelSuccess(json)))
-      .then(show_toaster_message('Успешно обновлено!'))
-      .catch(error => console.log(error));
+      .then(json => {
+        if(json.error) {
+          return dispatch({type: 'ADD_ERROR', error: json});
+        } else {
+          show_toaster_message('Успешно обновлено!')
+          return dispatch(updateChannelSuccess(json));
+        }
+      })
+      .catch(err => dispatch({type: 'ADD_ERROR', error: err}));
   };
 }

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import Sidebar from './Sidebar'
 import Header from './Header'
-import AdminWorkspace from './AdminWorkspace'
 import Footer from './Footer'
 import ManageChannels from './channels/ManageChannels'
 import ManageClients from './ManageClients'

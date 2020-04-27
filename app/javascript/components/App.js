@@ -14,6 +14,8 @@ import Header from './Header'
 import Chat from './Chat'
 import Admin from './Admin'
 
+import ErrorMessages from './ErrorMessages'
+
 import configureStore from '../configureStore'
 const store = configureStore()
 
@@ -25,6 +27,7 @@ class App extends React.Component {
           <title>Chat</title>
           <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         </Helmet>
+        <ErrorMessages/>
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Chat} />

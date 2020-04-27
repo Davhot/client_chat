@@ -9,7 +9,7 @@ module BeaverClient::Client
         body: {},
         method: 'post'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 201
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 201
 
       response[:body]
     end
@@ -29,7 +29,7 @@ module BeaverClient::Client
         body: {},
         method: 'delete'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 204
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 204
 
       true
     end
@@ -40,7 +40,7 @@ module BeaverClient::Client
         body: { channels: [channel_name] },
         method: 'put'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 200
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 200
 
       true
     end
@@ -51,7 +51,7 @@ module BeaverClient::Client
         body: { channels: [channel_name] },
         method: 'put'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 200
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 200
 
       true
     end
@@ -66,7 +66,7 @@ module BeaverClient::Client
         body: { channel: channel_name, data: data.to_json },
         method: 'post'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 200
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 200
 
       true
     end

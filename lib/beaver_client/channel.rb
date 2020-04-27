@@ -13,7 +13,7 @@ module BeaverClient::Channel
         body: body,
         method: 'post'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 201
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 201
 
       true
     end
@@ -31,7 +31,7 @@ module BeaverClient::Channel
         url: ENV['BEAVER_URL'] + "/channel/#{channel_name}",
         method: 'delete'
       )
-      raise response.inspect unless response[:valid] && response[:status] == 204
+      raise response[:body]['error'] unless response[:valid] && response[:status] == 204
 
       true
     end
