@@ -29,4 +29,3 @@ advantages.txt
 .env
 todo
 /db/schema.rb
-/config/database.yml
