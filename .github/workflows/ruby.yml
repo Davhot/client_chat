@@ -40,7 +40,15 @@ jobs:
           RAILS_ENV: test
           TEST_DATABASE_URL: postgres://postgres:@localhost:5432/test
         run: |
+          bundle exec rails db:create
           bundle exec rails db:migrate
 
       - name: Run tests
-        run: bundle exec rspec
+        run: bundle exec rspec spec/controllers spec/features spec/models
+        env:
+          RAILS_ENV: test
+          TEST_DATABASE_URL: postgres://postgres:@localhost:5432/test
+          NOTIFY_EMAIL: noreply_client_chat@mail.ru
+          NOTIFY_PASSWORD: ""
+          DEVISE_JWT_SECRET_KEY: test
+          BEAVER_URL: http://localhost:8080/api
