@@ -190,7 +190,7 @@ GEM
     orm_adapter (0.5.0)
     pg (1.1.4)
     public_suffix (4.0.3)
-    puma (4.3.3)
+    puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.2)
     rack-proxy (0.6.5)
@@ -362,7 +362,7 @@ DEPENDENCIES
   jbuilder!
   listen (>= 3.0.5, < 3.2)
   pg (~> 1.1.4)
-  puma (~> 4.0)
+  puma (~> 4.3)
   rails (~> 6.0.0)
   rails-controller-testing
   rb-readline
